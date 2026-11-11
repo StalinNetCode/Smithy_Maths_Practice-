@@ -39,14 +39,22 @@ Every topic has four levels (Easy, Moderate, Difficult, Very Difficult). Each le
 ## Answering, whiteboard and AI
 
 - **One attempt per question:** students type (or pick) an answer and press **Submit answer**. It is marked once: correct answers earn Puppies (1 / 2 / 4 / 5 by level); wrong answers earn none and the correction with full working appears straight away.
-- **Explain** shows the method hint at any time. **✨ Explain with AI** appears once the question is answered: Claude writes a step-by-step explanation, including what probably went wrong with the student's answer.
+- **Explain** shows the method hint at any time. **✨ Explain with AI** appears once the question is answered: the AI tutor writes a step-by-step explanation, including what probably went wrong with the student's answer.
 - **Whiteboard:** a drawing pad on the right of each question for working out (pens, eraser, undo, clear). It can be hidden, and stacks under the question on phones. Drawings are not saved.
 
-### AI backend (Claude)
+### AI backend (free by default)
 
-`supabase/functions/explain-ai` runs as a Supabase Edge Function. The browser never sees the AI key: the function checks the student's name and PIN with the database (`portal_ai_check`), allows **40 explanations per student per 24 hours**, then calls Claude. The student's name is never sent to the AI.
+`supabase/functions/explain-ai` runs as a Supabase Edge Function. The browser never sees an AI key: the function checks the student's name and PIN with the database (`portal_ai_check`), allows **40 explanations per student per 24 hours**, then asks the AI. The student's name is never sent to the AI.
 
-Secrets (Supabase dashboard → Edge Functions → Secrets): `ANTHROPIC_API_KEY` (required), `AI_MODEL` (optional, default `claude-haiku-5-5`), `AI_DAILY_LIMIT` (optional, default 40). Opening https://ouagqetmnjlzhiyhhgan.supabase.co/functions/v1/explain-ai in a browser shows whether the key is set.
+Secrets (Supabase dashboard → Edge Functions → Secrets). Keys are tried in this order; set only the free ones and nothing is ever charged:
+
+| Secret | Cost | Where |
+|---|---|---|
+| `GEMINI_API_KEY` | Free tier | aistudio.google.com → Get API key |
+| `GROQ_API_KEY` | Free tier | console.groq.com → API Keys |
+| `ANTHROPIC_API_KEY` | Paid per use (optional backup) | console.anthropic.com |
+
+Optional: `AI_DAILY_LIMIT` (default 40). Opening https://ouagqetmnjlzhiyhhgan.supabase.co/functions/v1/explain-ai in a browser shows which keys are set.
 
 ## Answer input
 
