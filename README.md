@@ -15,16 +15,16 @@ A GCSE Higher maths practice portal that runs on GitHub Pages. Students type or 
 
 ## Question bank
 
-Tests use the **worksheet questions** by default (167 questions with answers and full working), taken from the PDFs in `worksheets/`:
+**Every test question comes from the worksheets** in `worksheets/` (351 questions, each with its answer, method and full working). There are no generated questions.
 
-| Worksheet | Portal topic | Easy / Moderate / Difficult / Very Difficult |
+| Worksheets | Portal topic | Easy / Moderate / Difficult / Very Difficult |
 |---|---|---|
-| Indices - 1 + Surds - 1 | Indices and Surds | 11 / 31 / 30 / 32 |
+| Indices - 1, Indices - 2, Surds - 1 | Indices and Surds | 28 / 61 / 53 / 38 |
+| Quadratics - By factorisation, Completing the square - 1, Probability counters (scan) | Quadratics | 16 / 20 / 32 / 40 |
 | Sequences - 1 | Sequences | 11 / 14 / 4 / 4 |
 | Algebraic Fractions - 2 | Algebraic Fractions | 4 / 8 / 11 / 7 |
-| (none yet) | Quadratics | generated questions only |
 
-"Show that" questions are turned into "find a and b" (or "simplify") questions so they can be marked automatically. Students can switch to **Generated practice** (new numbers every time) or **Both**.
+A test is up to 10 different questions from the chosen topic and level, in a different order each set. "Show that" questions are turned into "find the value(s)" questions so they can be marked automatically. Each question shows its worksheet reference (for example "Completing sq Q9b").
 
 Every topic has four levels (Easy, Moderate, Difficult, Very Difficult). Each level has 10 repeatable test sets of 10 questions, plus a Mixed option. Each question has an **Explain** hint and a full **Correction** with working.
 
@@ -47,10 +47,8 @@ Every topic has four levels (Easy, Moderate, Difficult, Very Difficult). Each le
 
 - `index.html` is the portal (screens, marking, dashboard).
 - `worksheets.js` is the worksheet question bank (one line per question, with the worksheet reference).
-- `questions.js` is the generated question bank.
 - `worksheets/` holds the source PDFs.
 - To add a worksheet question, copy a `W(...)` or `V(...)` line in `worksheets.js`.
-- `questions.js` (generated): Each template generates fresh numbers; add templates to a level's list to add questions.
 
 ## Turning on GitHub Pages
 

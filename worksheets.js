@@ -1,16 +1,20 @@
 /* Smithy Maths Practice - WORKSHEET question bank (loaded after questions.js).
-   Questions transcribed from the Prasad's Tutorials worksheets: Indices - 1, Surds - 1, Sequences - 1, Algebraic Fractions - 2.
+   Questions transcribed from the Prasad's Tutorials worksheets: Indices - 1, Indices - 2, Surds - 1, Sequences - 1, Algebraic Fractions - 2,
+   Quadratics - By factorisation, Completing the square - 1, and the scanned probability (counters) exam questions.
+   EVERY test question comes from this file.
    "Show that" questions are turned into "find the value" questions so they can be marked automatically.
    W(level, ref, question, answer, method, working, options) adds one fixed question to BANK['Maths'][topic][level].
    Answers: a number, an array of numbers (any order), or a string (expression or "a,b" pair). */
 (()=>{
 const F=(n,d)=>`<span class=fr><span>${n}</span><span>${d}</span></span>`;
 const S=(b,n)=>`${b}<sup>${n}</sup>`;
+const m=n=>n<0?`−${-n}`:`${n}`;
 const PAIR='Type the values in order separated by a comma, for example 4, -7.';
 const SURD='Use the √ button (or type sqrt). For example 3√5.';
 const ALG='Type it with / and brackets, for example (2x + 1)/(x - 3).';
 let T='';const L={};
 const topic=t=>{T=t;BANK['Maths'][t]=BANK['Maths'][t]||[[],[],[],[]]};
+['Indices and Surds','Quadratics','Sequences','Algebraic Fractions'].forEach(topic);
 const W=(lv,ref,q,a,m,w,o={})=>{const f=()=>Q(q,a,m,w,{ref,...o,...(o.c?{c:shuf(o.c.slice())}:{})});f.pdf=1;f.ref=ref;BANK['Maths'][T][lv].push(f)};
 /* value questions: answer is a number, display string d */
 const V=(lv,ref,q,a,d,m,w,o={})=>W(lv,ref,q,a,m,w,{d,...o});
@@ -90,6 +94,7 @@ sx(2,`${IX} Q16f`,`${S(5,'4x/3')} = ${S(125,'2/3')}`,1.5,'3/2','Write 125 as 5³
  .forEach(([p,b,t,v,d,w])=>sx(3,`${IX} Q17${p}`,`(${F(...b.split('/'))})<sup>x</sup> = ${t.includes('/')?F(...t.split('/')):t}`,v,d,'Write both sides as powers of the same fraction. Flipping a fraction changes the sign of the index.',`${w}. So x = ${d}.`));
 
 /* ===================== SURDS - 1 ===================== */
+topic('Indices and Surds');
 const SX='Surds 1';
 W(2,`${SX} Q1`,`${F('8 + √12','5 + √3')} can be written as ${F('a + √3','b')} where a and b are integers. Find a and b.`,'17,11','Multiply the top and bottom by 5 − √3 (the conjugate), then simplify.','√12 = 2√3. (8 + 2√3)(5 − √3) = 40 − 8√3 + 10√3 − 6 = 34 + 2√3. Bottom: 25 − 3 = 22. (34 + 2√3)/22 = (17 + √3)/11. So a = 17, b = 11.',{d:'a = 17, b = 11',h:PAIR});
 W(3,`${SX} Q2`,`${F('√180 − 2√5','5√5 − 5')} can be written as a + ${F('√5','b')} where a and b are integers. Find a and b.`,'1,5','Simplify √180, take out common factors, then rationalise using the conjugate.','√180 = 6√5, so the top is 4√5. Bottom: 5(√5 − 1). 4√5(√5 + 1) / (5 × 4) = (20 + 4√5)/20 = 1 + √5/5. So a = 1, b = 5.',{d:'a = 1, b = 5',h:PAIR});
@@ -190,4 +195,175 @@ W(3,`${AX} Q7a`,`Write ${F('4x² − 9','6x + 9')} × ${F('2x','x² − 3x')} in
 mc(3,`${AX} Q7b`,`Express ${F(3,'x + 1')} + ${F(1,'x − 2')} − ${F(4,'x')} as a single fraction in its simplest form. [Edexcel Nov 2018]`,'(8 − x)/(x(x + 1)(x − 2))',['0','(8 + x)/(x(x + 1)(x − 2))','(8x − 8)/(x(x + 1)(x − 2))'],ADD,`3x(x − 2) + x(x + 1) − 4(x + 1)(x − 2) = 3x² − 6x + x² + x − 4x² + 4x + 8 = 8 − x. Answer ${F('8 − x','x(x + 1)(x − 2)')}.`);
 W(3,`${AX} Q8`,`2 − ${F('x + 2','x − 3')} − ${F('x − 6','x + 3')} can be written as ${F('ax + b','x² − 9')}. Find a and b. [Edexcel June 2017]`,'4,-42','Use the common denominator (x − 3)(x + 3) = x² − 9. Write 2 as 2(x² − 9)/(x² − 9).','2x² − 18 − (x² + 5x + 6) − (x² − 9x + 18) = 4x − 42. So a = 4, b = −42.',{d:'a = 4, b = −42',h:PAIR});
 V(2,`${AX} Q9`,`${F('3x + 6','x² − 3x − 10')} ÷ ${F('x + 5','x³ − 25x')} simplifies to ax. Find a.`,3,'3',MUL,`${F('3(x + 2)','(x − 5)(x + 2)')} × ${F('x(x − 5)(x + 5)','x + 5')} = 3x. So a = 3.`);
+
+/* ===================== INDICES - 2 ===================== */
+topic('Indices and Surds');
+const I2='Indices 2';
+const fr=(n,d)=>`${n<0?'−':''}${Math.abs(n)}${d==1?'':'/'+d}`;
+/* ev(level, part, html, value, display, working) : evaluate questions */
+const ev=(lv,p,h,v,d,w,mm)=>V(lv,`${I2} ${p}`,`Evaluate ${h}`,v,d,mm||'Deal with a negative index first (one over / flip the fraction), then the root (denominator of the index), then the power (numerator). A decimal index can be written as a fraction: 0.5 = ½, 1.5 = 3/2, 0.25 = ¼, 0.6 = 3/5, 0.8 = 4/5.',w,{h:'Give a whole number or a fraction such as 1/16.'});
+[['Q1a',0,S(49,'1/2'),7,'7','√49 = 7.'],['Q1b',0,S(27,'1/3'),3,'3','∛27 = 3.'],['Q1c',0,S(16,'1/4'),2,'2','The 4th root of 16 is 2 (2⁴ = 16).'],['Q1d',0,S(8,'1/3'),2,'2','∛8 = 2.'],['Q1e',0,S(100,'1/2'),10,'10','√100 = 10.'],
+ ['Q1f',1,S(9,'1.5'),27,'27','1.5 = 3/2. √9 = 3, then 3³ = 27.'],['Q1g',1,S(16,'3/4'),8,'8','4th root of 16 = 2, then 2³ = 8.'],['Q1h',1,S(125,'2/3'),25,'25','∛125 = 5, then 5² = 25.'],['Q1i',1,S(32,'4/5'),16,'16','5th root of 32 = 2, then 2⁴ = 16.'],
+ ['Q1j',0,S(36,'1/2'),6,'6','√36 = 6.'],['Q1k',0,S(64,'1/2'),8,'8','√64 = 8.'],['Q1l',0,S(121,'1/2'),11,'11','√121 = 11.'],['Q1m',1,S(27,'2/3'),9,'9','∛27 = 3, then 3² = 9.'],['Q1n',1,S(81,'3/4'),27,'27','4th root of 81 = 3, then 3³ = 27.'],
+ ['Q1o',1,S(1000,'2/3'),100,'100','∛1000 = 10, then 10² = 100.'],['Q1p',1,S(32,'0.6'),8,'8','0.6 = 3/5. 5th root of 32 = 2, then 2³ = 8.'],['Q1q',1,S(4,'1.5'),8,'8','1.5 = 3/2. √4 = 2, then 2³ = 8.'],['Q1r',1,S(4,'2.5'),32,'32','2.5 = 5/2. √4 = 2, then 2⁵ = 32.'],
+ ['Q1s',1,S(81,'0.25'),3,'3','0.25 = 1/4. The 4th root of 81 is 3.'],['Q1t',1,S(5,'−1'),1/5,'1/5','5<sup>−1</sup> = 1/5.'],['Q1u',2,`(${F(1,4)})<sup>−2</sup>`,16,'16','Flip: 4² = 16.'],['Q1v',2,S(8,'−1/3'),1/2,'1/2','8<sup>1/3</sup> = 2, so 8<sup>−1/3</sup> = 1/2.'],
+ ['Q1w',2,S(9,'−0.5'),1/3,'1/3','9<sup>0.5</sup> = 3, so 9<sup>−0.5</sup> = 1/3.'],['Q1x',2,S(16,'−0.25'),1/2,'1/2','16<sup>0.25</sup> = 2, so 16<sup>−0.25</sup> = 1/2.'],['Q1y',2,S(32,'−0.8'),1/16,'1/16','0.8 = 4/5. 5th root of 32 = 2, 2⁴ = 16, so 1/16.'],['Q1z',2,S(16,'−1.5'),1/64,'1/64','1.5 = 3/2. √16 = 4, 4³ = 64, so 1/64.'],
+ ['Q2a',1,`(${F(1,4)})<sup>1/2</sup>`,1/2,'1/2','√1 / √4 = 1/2.'],['Q2b',2,`(${F(1,8)})<sup>−2/3</sup>`,4,'4','Flip: 8<sup>2/3</sup>. ∛8 = 2, 2² = 4.'],['Q2c',2,`(25)<sup>−2.5</sup>`,1/3125,'1/3125','2.5 = 5/2. √25 = 5, 5⁵ = 3125, so 1/3125.'],
+ ['Q2d',2,`(${F(1,16)})<sup>−1/4</sup>`,2,'2','Flip: 16<sup>1/4</sup> = 2.'],['Q2e',1,S(7,0),1,'1','Anything to the power 0 is 1.'],['Q2f',2,`(${F(4,5)})<sup>−2</sup>`,25/16,'25/16','Flip: (5/4)² = 25/16.'],['Q2g',2,`(${F(4,7)})<sup>−2</sup>`,49/16,'49/16','Flip: (7/4)² = 49/16.'],
+ ['Q2h',2,`${S(5,'−2')} × ${S(4,3)}`,64/25,'64/25','5<sup>−2</sup> = 1/25 and 4³ = 64, so 64/25.'],['Q2i',2,`${S(2,'−3')} ÷ ${S(3,'−3')}`,27/8,'27/8','1/8 ÷ 1/27 = 27/8.'],
+ ['Q2j',3,`${S(3,4)} ÷ (${F(1,3)})<sup>−4</sup>`,1,'1','(1/3)<sup>−4</sup> = 3⁴ = 81, so 81 ÷ 81 = 1.'],['Q2k',3,`(${F(4,9)})<sup>−2</sup> × (${F(27,8)})<sup>−3</sup>`,32/243,'32/243','(9/4)² = 81/16 and (8/27)³ = 512/19683. 81/16 × 512/19683 = 32/243.'],
+ ['Q2l',3,`${S(78,'−1')} × ${S(13,3)}`,169/6,'169/6','1/78 × 2197 = 2197/78. Divide top and bottom by 13: 169/6.']]
+ .forEach(([p,lv,h,v,d,w])=>ev(lv,p,h,v,d,w));
+const IF='Type it as a power, for example a^8, a^-2 or 3a^3.';
+const ix=(lv,p,h,a,w,alt=[])=>W(lv,`${I2} ${p}`,`Express ${h} in index form.`,a,'Multiply indices for a power of a power; add them when multiplying; subtract them when dividing. A root is a fractional power.',w,{alt,h:IF});
+ix(1,'Q3a',`(${S('a',16)})<sup>1/2</sup>`,'a^8','16 × ½ = 8, so a⁸.');
+ix(1,'Q3b',`(${S('a',15)})<sup>1/3</sup>`,'a^5','15 × ⅓ = 5, so a⁵.');
+ix(2,'Q3c',`(27${S('a',9)})<sup>1/3</sup>`,'3a^3','∛27 = 3 and 9 × ⅓ = 3, so 3a³.');
+ix(1,'Q3d',`(${S('x',32)})<sup>1/4</sup>`,'x^8','32 × ¼ = 8, so x⁸.');
+ix(1,'Q3e',`(${S('x',20)})<sup>1/4</sup>`,'x^5','20 × ¼ = 5, so x⁵.');
+ix(1,'Q3f',`${S('a','−2')} ÷ ${S('a','−4')}`,'a^2','−2 − (−4) = 2, so a².');
+ix(1,'Q3g',`${S('a',4)} × ${S('a','−5')}`,'a^-1','4 + (−5) = −1, so a<sup>−1</sup>.',['1/a','a^(-1)']);
+ix(2,'Q3h',`(${S('a',2)})<sup>−1/2</sup>`,'a^-1','2 × (−½) = −1, so a<sup>−1</sup>.',['1/a','a^(-1)']);
+ix(1,'Q3i',`(${S('a','−4')})<sup>2</sup>`,'a^-8','−4 × 2 = −8, so a<sup>−8</sup>.',['1/a^8','a^(-8)']);
+ix(1,'Q3j',`${S('a','−4')} × ${S('a',4)}`,'a^0','−4 + 4 = 0, so a⁰ (which equals 1).',['1']);
+ix(1,'Q3k',`(${S('a','1/2')})<sup>4</sup>`,'a^2','½ × 4 = 2, so a².');
+ix(2,'Q3l',`(${S('a',16)})<sup>−1/4</sup>`,'a^-4','16 × (−¼) = −4, so a<sup>−4</sup>.',['1/a^4','a^(-4)']);
+const sv=(lv,p,eq,a,d,w)=>W(lv,`${I2} ${p}`,`Solve ${eq}`,a,'Write both sides with the same base, or undo the power: a square needs a square root (±), a cube needs a cube root, and a negative or fractional power needs flipping or raising to the reciprocal power.',w,{d,h:Array.isArray(a)?'Give every answer, for example 3 or -3.':'Fractions like 1/25 are fine.'});
+sv(0,'Q4a',`${S(3,'x')} = 81`,4,'x = 4','81 = 3⁴, so x = 4.');
+sv(0,'Q4b',`${S(4,'x')} = 64`,3,'x = 3','64 = 4³, so x = 3.');
+sv(0,'Q4c',`${S(5,'x')} = 125`,3,'x = 3','125 = 5³, so x = 3.');
+sv(0,'Q4d',`${S(7,'x')} = 49`,2,'x = 2','49 = 7², so x = 2.');
+sv(0,'Q4e',`${S(2,'x')} = 32`,5,'x = 5','32 = 2⁵, so x = 5.');
+sv(0,'Q4f',`${S(2,'x')} = 64`,6,'x = 6','64 = 2⁶, so x = 6.');
+sv(0,'Q4g',`${S('x',3)} = 27`,3,'x = 3','∛27 = 3.');
+sv(0,'Q4h',`${S('x',3)} = 64`,4,'x = 4','∛64 = 4.');
+sv(0,'Q4i',`${S('x',5)} = 32`,2,'x = 2','The 5th root of 32 is 2.');
+sv(1,'Q4j',`5${S('x',2)} = 45`,[3,-3],'x = 3 or x = −3','x² = 9, so x = ±3.');
+sv(1,'Q4k',`3${S('x',3)} = 24`,2,'x = 2','x³ = 8, so x = 2.');
+sv(1,'Q4l',`4${S('x',4)} = 324`,[3,-3],'x = 3 or x = −3','x⁴ = 81, so x = ±3.');
+sv(1,'Q4m',`5${S('x',3)} = 320`,4,'x = 4','x³ = 64, so x = 4.');
+sv(1,'Q4n',`${S('x','1/2')} = 3`,9,'x = 9','√x = 3, so x = 9.');
+sv(2,'Q4o',`${S('x','−4')} = 256`,[0.25,-0.25],'x = 1/4 or x = −1/4','1/x⁴ = 256, so x⁴ = 1/256 and x = ±1/4.');
+sv(2,'Q4p',`${S('x','−1/2')} = 5`,0.04,'x = 1/25','1/√x = 5, so √x = 1/5 and x = 1/25.');
+sv(1,'Q4q',`${S(2,'x')} = 1`,0,'x = 0','2⁰ = 1, so x = 0.');
+sv(1,'Q4r',`${S(3,'−x')} = 1`,0,'x = 0','3⁰ = 1, so −x = 0 and x = 0.');
+const sp=(lv,p,h,a,w,alt=[],hint=IF)=>W(lv,`${I2} ${p}`,`Simplify ${h}`,a,'Deal with each part separately: numbers, then each letter. Use the index laws, and remember a root is a fractional power.',w,{alt,h:hint});
+sp(2,'Q5a',`(${F(`16${S('a',4)}`,S('b',4))})<sup>3/4</sup>`,'8a^3/b^3','16<sup>3/4</sup> = 8, (a⁴)<sup>3/4</sup> = a³, (b⁴)<sup>3/4</sup> = b³. Answer 8a³/b³.',['(8a^3)/(b^3)','8a^3b^-3','8(a/b)^3'],'Type it like 8a^3/b^3.');
+W(3,`${I2} Q5b`,`Simplify (${F(S('a',2),`25${S('b',3)}`)})<sup>−3/2</sup>`,'125b^(9/2)/a^3','Flip for the negative, then apply the power 3/2 to every part.','(25b³/a²)<sup>3/2</sup> = 125 b<sup>9/2</sup> / a³.',{c:['125b^(9/2)/a^3','125a^3/b^(9/2)','b^(9/2)/(125a^3)','15b^(9/2)/a^3']});
+sp(2,'Q5c',F(`12${S('x',3)}√x`,`4${S('x',2)}`),'3x^(3/2)','√x = x<sup>½</sup>. 12/4 = 3 and x<sup>3 + ½ − 2</sup> = x<sup>3/2</sup>.',['3x^1.5','3x^3/2','3x√x']);
+W(3,`${I2} Q5d`,`Simplify ${F('√(4z)',S('z',3))}`,'2z^(-5/2)','√(4z) = 2z<sup>½</sup>. Then subtract the indices.','2z<sup>½ − 3</sup> = 2z<sup>−5/2</sup>.',{c:['2z^(-5/2)','2z^(-3/2)','4z^(-5/2)','2z^(5/2)']});
+sp(2,'Q5g',`(16${S('w',20)})<sup>1/4</sup>`,'2w^5','16<sup>¼</sup> = 2 and 20 × ¼ = 5, so 2w⁵.');
+sp(2,'Q5h',`(32${S('q',10)})<sup>1/5</sup>`,'2q^2','32<sup>⅕</sup> = 2 and 10 × ⅕ = 2, so 2q².');
+sp(2,'Q5i',F(`(${S('x',2)})<sup>−3</sup>`,`${S('x',3)} × ${S('x','−1')}`),'x^-8','Top: x<sup>−6</sup>. Bottom: x². x<sup>−6 − 2</sup> = x<sup>−8</sup>.',['1/x^8','x^(-8)']);
+sp(3,'Q5j',F(`(4${S('a','−3')})<sup>3</sup>`,`2${S('a',4)} × 4${S('a',2)}`),'8a^-15','Top: 64a<sup>−9</sup>. Bottom: 8a⁶. 64 ÷ 8 = 8 and a<sup>−9 − 6</sup> = a<sup>−15</sup>.',['8/a^15','8a^(-15)']);
+
+/* ===================== QUADRATICS: FACTORISATION ===================== */
+topic('Quadratics');
+const QF='Quad Factorisation';
+const ROOTS='Give both answers, for example 3 or -5. Fractions like 3/2 are fine.';
+const FM='Rearrange so one side is 0, factorise, then set each bracket equal to 0.';
+/* qs(level, ref, equation html, [a,b,c] of the rearranged form, roots, display, working) */
+const qs=(lv,ref,eq,abc,roots,d,w,o={})=>W(lv,ref,`Solve ${eq}`,roots,o.m||FM,w,{d,h:ROOTS,abc,...o});
+[['a',0,'x² + 2x − 35 = 0',[1,2,-35],[5,-7],'(x + 7)(x − 5)'],['b',0,'x² − 15x − 54 = 0',[1,-15,-54],[18,-3],'(x − 18)(x + 3)'],['c',0,'x² − x − 90 = 0',[1,-1,-90],[10,-9],'(x − 10)(x + 9)'],
+ ['d',0,'x² + 15x + 54 = 0',[1,15,54],[-6,-9],'(x + 6)(x + 9)'],['e',0,'x² + 20x + 51 = 0',[1,20,51],[-3,-17],'(x + 3)(x + 17)'],['f',0,'x² − 12x + 32 = 0',[1,-12,32],[4,8],'(x − 4)(x − 8)'],
+ ['g',1,'x² − 24x + 143 = 0',[1,-24,143],[11,13],'(x − 11)(x − 13)'],['h',1,'x² − 17x + 60 = 0',[1,-17,60],[5,12],'(x − 5)(x − 12)'],['i',1,'x² − 14x − 176 = 0',[1,-14,-176],[22,-8],'(x − 22)(x + 8)'],
+ ['j',1,'x² − 26x + 133 = 0',[1,-26,133],[7,19],'(x − 7)(x − 19)'],['k',1,'x² + 7x − 44 = 0',[1,7,-44],[-11,4],'(x + 11)(x − 4)'],['l',1,'x² + 2x − 195 = 0',[1,2,-195],[-15,13],'(x + 15)(x − 13)'],
+ ['m',2,'2x² − 5x + 3 = 0',[2,-5,3],[1.5,1],'(2x − 3)(x − 1)','3/2','1'],['n',2,'2x² − 7x − 9 = 0',[2,-7,-9],[4.5,-1],'(2x − 9)(x + 1)','9/2','−1'],['o',2,'2x² + 13x + 6 = 0',[2,13,6],[-0.5,-6],'(2x + 1)(x + 6)','−1/2','−6']]
+ .forEach(([p,lv,eq,abc,r,f,d1,d2])=>{const a=d1||m(r[0]),b=d2||m(r[1]);qs(lv,`${QF} Q1${p}`,eq,abc,r,`x = ${a} or x = ${b}`,`${eq.replace(' = 0','')} = ${f} = 0, so x = ${a} or x = ${b}.`)});
+[['a',1,'y² = y + 56','y² − y − 56 = 0',[1,-1,-56],[8,-7],'(y − 8)(y + 7)','8','−7','y'],
+ ['b',2,'12w² = 13w − 3','12w² − 13w + 3 = 0',[12,-13,3],[0.75,1/3],'(4w − 3)(3w − 1)','3/4','1/3','w'],
+ ['c',2,'11y = −4 − 6y²','6y² + 11y + 4 = 0',[6,11,4],[-4/3,-0.5],'(3y + 4)(2y + 1)','−4/3','−1/2','y'],
+ ['d',1,'c(c − 1) = 2','c² − c − 2 = 0',[1,-1,-2],[2,-1],'(c − 2)(c + 1)','2','−1','c'],
+ ['e',1,'q² = −2(q − 4)','q² + 2q − 8 = 0',[1,2,-8],[-4,2],'(q + 4)(q − 2)','−4','2','q'],
+ ['f',1,'d(d + 2) = 3','d² + 2d − 3 = 0',[1,2,-3],[-3,1],'(d + 3)(d − 1)','−3','1','d'],
+ ['g',1,'x(x − 5) = 84','x² − 5x − 84 = 0',[1,-5,-84],[12,-7],'(x − 12)(x + 7)','12','−7','x'],
+ ['h',2,'y(5y + 27) = 18','5y² + 27y − 18 = 0',[5,27,-18],[0.6,-6],'(5y − 3)(y + 6)','3/5','−6','y'],
+ ['i',1,'3p² = 6p(2 + p)','3p² + 12p = 0',[3,12,0],[0,-4],'3p(p + 4)','0','−4','p'],
+ ['j',2,'2x(4x + 5) = 3','8x² + 10x − 3 = 0',[8,10,-3],[0.25,-1.5],'(4x − 1)(2x + 3)','1/4','−3/2','x'],
+ ['k',2,'13x = 2(2x² + 5)','4x² − 13x + 10 = 0',[4,-13,10],[1.25,2],'(4x − 5)(x − 2)','5/4','2','x'],
+ ['l',2,'2(10 − x²) = 3x','2x² + 3x − 20 = 0',[2,3,-20],[2.5,-4],'(2x − 5)(x + 4)','5/2','−4','x'],
+ ['m',2,'4y − 3 = 3y(y − 2)','3y² − 10y + 3 = 0',[3,-10,3],[1/3,3],'(3y − 1)(y − 3)','1/3','3','y'],
+ ['n',2,'−12y − 9(y + 1) = 6y²','6y² + 21y + 9 = 0',[6,21,9],[-0.5,-3],'3(2y + 1)(y + 3)','−1/2','−3','y'],
+ ['o',1,'(a + 4)(a − 2) = −5','a² + 2a − 3 = 0',[1,2,-3],[-3,1],'(a + 3)(a − 1)','−3','1','a'],
+ ['p',2,'(3x − 4)(x − 4) = −5','3x² − 16x + 21 = 0',[3,-16,21],[7/3,3],'(3x − 7)(x − 3)','7/3','3','x']]
+ .forEach(([p,lv,eq,re,abc,r,f,a,b,v])=>qs(lv,`${QF} Q2${p}`,eq,abc,r,`${v} = ${a} or ${v} = ${b}`,`Rearrange: ${re}. Factorise: ${f} = 0, so ${v} = ${a} or ${v} = ${b}.`));
+const SQ='Get the squared term on its own, then square root both sides. Remember the ± (two answers).';
+[['a',0,'x² = 25',5,'5','x','x² = 25'],['b',0,'a² = 36',6,'6','a','a² = 36'],['c',0,`y² = ${F(49,4)}`,3.5,'7/2','y','y² = 49/4'],['d',0,'b² − 16 = 0',4,'4','b','b² = 16'],['e',0,'a² − 64 = 0',8,'8','a','a² = 64'],
+ ['f',1,`x² − ${F(4,81)} = 0`,2/9,'2/9','x','x² = 4/81'],['g',0,'4y² = 9',1.5,'3/2','y','y² = 9/4'],['h',0,'2x² = 32',4,'4','x','x² = 16'],['i',0,'3p² − 27 = 0',3,'3','p','p² = 9'],['j',0,'5p² − 20 = 0',2,'2','p','p² = 4'],
+ ['k',1,'25b² − 40 = 9',1.4,'7/5','b','25b² = 49, b² = 49/25'],['l',0,'3b² − 8 = 4',2,'2','b','3b² = 12, b² = 4']]
+ .forEach(([p,lv,eq,r,d,v,w])=>qs(lv,`${QF} Q3${p}`,eq,null,[r,-r],`${v} = ${d} or ${v} = −${d}`,`${w}, so ${v} = ±${d}.`,{m:SQ}));
+V(1,`${QF} Q4`,'The area of a parallelogram is 50 cm². The base is twice its height. Calculate the height in cm.',5,'5 cm','Let the height be h, so the base is 2h. Area = base × height.','2h × h = 50 → 2h² = 50 → h² = 25 → h = 5 cm (a length must be positive).');
+W(2,`${QF} Q5`,'The breadth of a rectangular plot of land is 5 m less than its length. The area of the plot is 104 m². Find the length and the breadth in metres.',[13,8],'Let the length be L, so the breadth is L − 5. Form a quadratic from length × breadth = area.','L(L − 5) = 104 → L² − 5L − 104 = 0 → (L − 13)(L + 8) = 0 → L = 13 (a length must be positive). Length 13 m, breadth 8 m.',{d:'length 13 m, breadth 8 m',h:'Give both numbers, for example 13, 8.'});
+const ADV='Advanced';
+[['a','(3x + 2)(2x + 1) = 1','6x² + 7x + 1 = 0',[6,7,1],[-1/6,-1],'(6x + 1)(x + 1)','−1/6','−1'],
+ ['b','9n² − 27n + 20 = 0','9n² − 27n + 20 = 0',[9,-27,20],[4/3,5/3],'(3n − 4)(3n − 5)','4/3','5/3','n'],
+ ['c','(3x − 4)(x − 2) − 5 = 0','3x² − 10x + 3 = 0',[3,-10,3],[1/3,3],'(3x − 1)(x − 3)','1/3','3'],
+ ['d','2(4x + 1)(x − 1) + 3 = 0','8x² − 6x + 1 = 0',[8,-6,1],[0.25,0.5],'(4x − 1)(2x − 1)','1/4','1/2'],
+ ['e',`(3x − 2)(3x + 1) = −${F(1,2)}(21x + 6)`,'18x² + 15x + 2 = 0 (after multiplying by 2)',[18,15,2],[-1/6,-2/3],'(6x + 1)(3x + 2)','−1/6','−2/3'],
+ ['f',`x − 2 = ${F(4,'x + 1')}`,'(x − 2)(x + 1) = 4 → x² − x − 6 = 0',[1,-1,-6],[3,-2],'(x − 3)(x + 2)','3','−2'],
+ ['g',`3x − 1 = ${F(4,'2x + 1')}`,'(3x − 1)(2x + 1) = 4 → 6x² + x − 5 = 0',[6,1,-5],[5/6,-1],'(6x − 5)(x + 1)','5/6','−1'],
+ ['h',`${F(4,9)} − ${F('d²',25)} = 0`,'d² = 100/9',[9,0,-100],[10/3,-10/3],'d = ±√(100/9)','10/3','−10/3','d'],
+ ['j',`${F(1,2)}x² − ${F(11,4)}x + ${F(5,4)} = 0`,'multiply by 4: 2x² − 11x + 5 = 0',[2,-11,5],[0.5,5],'(2x − 1)(x − 5)','1/2','5'],
+ ['k',`${F(3,'x + 1')} − ${F(1,2)} = ${F(2,'3x − 1')}`,'multiply by 2(x + 1)(3x − 1): 6(3x − 1) − (x + 1)(3x − 1) = 4(x + 1) → x² − 4x + 3 = 0',[1,-4,3],[1,3],'(x − 1)(x − 3)','1','3']]
+ .forEach(([p,eq,re,abc,r,f,a,b,v='x'])=>qs(3,`${QF} ${ADV} Q6${p}`,eq,abc,r,`${v} = ${a} or ${v} = ${b}`,`${re}. Factorise: ${f} = 0, so ${v} = ${a} or ${v} = ${b}.`));
+{const D=Math.sqrt(336),r1=Math.round((-18+D)/6*100)/100,r2=Math.round((-18-D)/6*100)/100;
+ qs(3,`${QF} ${ADV} Q6i`,'(3s + 1)(s + 4) = −5(s − 1). Give your answers to 2 decimal places.',[3,18,-1],[r1,r2],`s = ${m(r1)} or s = ${m(r2)}`,`Expand: 3s² + 13s + 4 = −5s + 5 → 3s² + 18s − 1 = 0. This does not factorise, so use the formula: s = (−18 ± √336)/6, so s = ${m(r1)} or s = ${m(r2)}.`,{m:'Expand and rearrange to = 0. If it does not factorise, use the quadratic formula.',h:'Give both answers to 2 d.p., for example 0.25 or -3.75.'});}
+W(3,`${QF} ${ADV} Q6l`,'Solve √2x² + 7x + 5√2 = 0','x = −√2 or x = −5√2/2','Look for factors (√2x + p)(x + q) with pq = 5√2, or use the formula: b² − 4ac = 49 − 40 = 9.','(√2x + 5)(x + √2) = 0, so x = −5/√2 = −5√2/2 or x = −√2.',{c:['x = −√2 or x = −5√2/2','x = √2 or x = 5√2/2','x = −√2 or x = −5','x = −2 or x = −5/2']});
+W(3,`${QF} ${ADV} Q6m`,'Solve 3a²x² + 8abx + 4b² = 0, where a and b are constants and a ≠ 0.','x = −2b/(3a) or x = −2b/a','Treat it as a quadratic in x. Find two terms that multiply to 3a² × 4b² = 12a²b² and add to 8ab: 6ab and 2ab.','(3ax + 2b)(ax + 2b) = 0, so x = −2b/(3a) or x = −2b/a.',{c:['x = −2b/(3a) or x = −2b/a','x = 2b/(3a) or x = 2b/a','x = −3a/(2b) or x = −a/(2b)','x = −2b/(3a) or x = −b/(2a)']});
+V(3,`${QF} ${ADV} Q6n`,`Solve ${F('3x','x − 1')} + ${F(1,'x − 2')} + ${F('4x − 1','(x − 1)(x − 2)')} = 0`,-2/3,'x = −2/3','Multiply every term by (x − 1)(x − 2), solve the quadratic, then reject any value that makes a denominator 0.','3x(x − 2) + (x − 1) + (4x − 1) = 0 → 3x² − x − 2 = 0 → (3x + 2)(x − 1) = 0. x = 1 makes x − 1 = 0, so it is rejected. x = −2/3.',{h:'Give the valid solution, for example -2/3.'});
+
+/* ===================== QUADRATICS: COMPLETING THE SQUARE ===================== */
+const CS='Completing sq';
+const r2=(x,n)=>Math.round(x*10**n+1e-9)/10**n;
+const cs=(lv,ref,eq,v,a,b,c,dp)=>{const D=Math.sqrt(b*b-4*a*c),x1=r2((-b+D)/(2*a),dp),x2=r2((-b-D)/(2*a),dp),h=b/(2*a),k=h*h-c/a,f=x=>m(+x.toFixed(4));
+  const rr=[x1,x2],ds=rr.map(x=>x.toFixed(dp).replace('-','−'));
+  W(lv,ref,`Solve ${eq} by completing the square. Give your answers correct to ${dp} decimal place${dp>1?'s':''}.`,rr,`${a!=1?`Divide every term by ${a} first. `:''}Halve the coefficient of ${v}, write (${v} + half)², subtract half², then rearrange and square root (±).`,
+  `${a!=1?`${v}² ${sg(+(b/a).toFixed(4))}${v} ${sg(+(c/a).toFixed(4))} = 0. `:''}(${v} ${sg(+h.toFixed(4))})² = ${f(k)}, so ${v} = ${f(-h)} ± √${f(k)}. ${v} = ${ds[0]} or ${v} = ${ds[1]}.`,{d:`${v} = ${ds[0]} or ${v} = ${ds[1]}`,abc:[a,b,c],h:`Give both answers to ${dp} d.p., for example ${dp==1?'0.7 or -2.7':'0.85 or -2.35'}.`})};
+cs(2,`${CS} Q1a`,'x² + 2x − 2 = 0','x',1,2,-2,1);cs(2,`${CS} Q1b`,'x² − 4x + 2 = 0','x',1,-4,2,1);cs(2,`${CS} Q1c`,'y² − 3y − 4 = 0','y',1,-3,-4,1);
+cs(2,`${CS} Q1d`,'y² + 9y + 1 = 0','y',1,9,1,1);cs(2,`${CS} Q1e`,'t² − 4t − 4 = 0','t',1,-4,-4,1);cs(2,`${CS} Q1f`,'p² − 5p + 1 = 0','p',1,-5,1,1);
+cs(3,`${CS} Q2a`,'2y² + 3y − 4 = 0','y',2,3,-4,2);cs(3,`${CS} Q2b`,'2t² − 2t − 3 = 0','t',2,-2,-3,2);cs(3,`${CS} Q2c`,'2p² − 3p − 1 = 0','p',2,-3,-1,2);
+cs(3,`${CS} Q2d`,'3x² + 2x − 3 = 0','x',3,2,-3,2);cs(3,`${CS} Q2e`,'15x² − 30x + 10 = 0','x',15,-30,10,2);cs(3,`${CS} Q2f`,'5y² = 9y − 1','y',5,-9,1,2);
+cs(3,`${CS} Q2g`,'2x² = 11x + 7','x',2,-11,-7,2);cs(3,`${CS} Q2h`,'2x = 8 − 5x²','x',5,2,-8,2);
+const SQH='Type it like (x + 3)^2 - 4, or use the ² button.';
+const sqf=(lv,ref,q,a,w,alt=[],h=SQH)=>W(lv,ref,q,a,'Halve the coefficient of x to find the number in the bracket, then subtract its square from the constant. If x² has a number in front, take it out as a factor first.',w,{alt,h});
+sqf(1,`${CS} Q3`,'Write x² + 4x + 5 in the form (x + a)² + b.','(x + 2)² + 1','Half of 4 is 2. (x + 2)² = x² + 4x + 4, so b = 5 − 4 = 1.');
+W(2,`${CS} Q4`,'For all values of x, x² − 10x + 7 = (x − p)² − q. Find p and q.','5,18','Halve −10 to get p, then compare constants.','(x − 5)² = x² − 10x + 25, so x² − 10x + 7 = (x − 5)² − 18. p = 5, q = 18.',{d:'p = 5, q = 18',h:PAIR});
+W(2,`${CS} Q5`,'Solve (x − 7)² − 5 = 0. Write your answer in the form a ± √b.','7 ± √5','Add 5 to both sides, square root (±), then add 7.','(x − 7)² = 5 → x − 7 = ±√5 → x = 7 ± √5.',{c:['7 ± √5','−7 ± √5','7 ± 5','5 ± √7']});
+W(3,`${CS} Q6`,'By completing the square, solve x² + 10x − 3 = 0. Give your answer in the form p ± √q.','−5 ± √28','Half of 10 is 5. Write (x + 5)², subtract 25, then rearrange and square root.','(x + 5)² − 25 − 3 = 0 → (x + 5)² = 28 → x = −5 ± √28 (= −5 ± 2√7).',{c:['−5 ± √28','5 ± √28','−5 ± √22','−10 ± √28']});
+sqf(2,`${CS} Q7a`,'Write x² + 14x − 9 in the form (x + a)² + b.','(x + 7)² − 58','Half of 14 is 7. (x + 7)² = x² + 14x + 49, so b = −9 − 49 = −58.');
+W(2,`${CS} Q7b`,'Write down the coordinates of the turning point of y = x² + 14x − 9.','(-7,-58)','Complete the square: y = (x + a)² + b has its turning point at (−a, b).','y = (x + 7)² − 58, so the turning point is (−7, −58).',{d:'(−7, −58)',h:'Type the coordinates like (2, -5).'});
+W(3,`${CS} Q8`,'6x − 7 − x² = p − (x + q)² where p and q are integers. Find p and q.','2,-3','Take out −1 from the x terms: −(x² − 6x) − 7, then complete the square inside the bracket.','−(x² − 6x) − 7 = −[(x − 3)² − 9] − 7 = 2 − (x − 3)². So p = 2, q = −3.',{d:'p = 2, q = −3',h:PAIR});
+sqf(2,`${CS} Q9a`,'Write x² − 6x − 3 in the form (x + a)² + b.','(x − 3)² − 12','Half of −6 is −3. (x − 3)² = x² − 6x + 9, so b = −3 − 9 = −12.');
+W(2,`${CS} Q9b`,'Solve x² − 6x − 3 = 0. Write your answer in the form p ± √q.','3 ± √12','Use the completed square from part (a): (x − 3)² = 12.','(x − 3)² − 12 = 0 → x − 3 = ±√12 → x = 3 ± √12 (= 3 ± 2√3).',{c:['3 ± √12','−3 ± √12','3 ± √6','3 ± 12']});
+sqf(3,`${CS} Q10`,'Write 2x² + 8x + 13 in the form a(x + b)² + c.','2(x + 2)² + 5','Take out 2 from the x terms: 2(x² + 4x) + 13 = 2[(x + 2)² − 4] + 13 = 2(x + 2)² + 5.',[],'Type it like 2(x + 3)^2 - 5.');
+sqf(3,`${CS} Q11a`,'Write 2x² − 12x + 17 in the form a(x − b)² + c.','2(x − 3)² − 1','2(x² − 6x) + 17 = 2[(x − 3)² − 9] + 17 = 2(x − 3)² − 1.',[],'Type it like 2(x - 3)^2 + 5.');
+W(3,`${CS} Q11b`,'Write down the coordinates of the turning point of y = 2x² − 12x + 17.','(3,-1)','Use the completed square from part (a).','y = 2(x − 3)² − 1, so the turning point is (3, −1).',{d:'(3, −1)',h:'Type the coordinates like (2, -5).'});
+W(1,`${CS} Q12`,'x² + hx + 15 = (x + 3)² + k. Find h and k.','6,6','Expand the right-hand side and compare coefficients.','(x + 3)² + k = x² + 6x + 9 + k. So h = 6 and 9 + k = 15 → k = 6.',{d:'h = 6, k = 6',h:PAIR});
+W(3,`${CS} Q13`,'2x² − 20x + 10 = p(x − q)² − r. Find p, q and r.','2,5,40','Take out 2: 2(x² − 10x) + 10, then complete the square.','2[(x − 5)² − 25] + 10 = 2(x − 5)² − 40. p = 2, q = 5, r = 40.',{d:'p = 2, q = 5, r = 40',h:'Type the values in order, separated by commas, for example 2, 5, 40.'});
+W(1,`${CS} Q14a`,'x² − 8x + 21 can be written as (x − a)² + b. Find a and b.','4,5','Halve −8 to find a, then compare constants.','(x − 4)² = x² − 8x + 16, so b = 21 − 16 = 5. a = 4, b = 5.',{d:'a = 4, b = 5',h:PAIR});
+W(2,`${CS} Q14b`,'The curve y = x² − 8x + 21 has a minimum point M. Write down the coordinates of M.','(4,5)','Use the completed square (x − 4)² + 5.','The minimum is when x − 4 = 0, so M = (4, 5).',{d:'(4, 5)',h:'Type the coordinates like (2, -5).'});
+sqf(2,`${CS} Q15a`,'Write x² + 6x + 13 in the form (x + a)² + b.','(x + 3)² + 4','Half of 6 is 3. (x + 3)² = x² + 6x + 9, so b = 13 − 9 = 4.');
+W(2,`${CS} Q15b`,'Write down the coordinates of the turning point of y = x² + 6x + 13.','(-3,4)','Use the completed square (x + 3)² + 4.','The turning point is (−3, 4).',{d:'(−3, 4)',h:'Type the coordinates like (2, -5).'});
+W(2,`${CS} Q15c`,'How many solutions does x² + 6x + 13 = 0 have?','None: the minimum point (−3, 4) is above the x-axis','Use the turning point from part (b). If the lowest point of a U-shaped curve is above the x-axis, the curve never crosses it.','The minimum point (−3, 4) is above the x-axis, so the curve never meets y = 0: there are no (real) solutions.',{c:['None: the minimum point (−3, 4) is above the x-axis','One: the curve touches the x-axis at (−3, 0)','Two: the curve crosses the x-axis twice','Two: because 13 is positive']});
+sqf(3,`${CS} Q16a`,'Write 3x² − 12x − 1 in the form a(x − b)² + c.','3(x − 2)² − 13','3(x² − 4x) − 1 = 3[(x − 2)² − 4] − 1 = 3(x − 2)² − 13.',[],'Type it like 3(x - 2)^2 + 5.');
+V(3,`${CS} Q16b`,'Find the minimum value of y = 3x² − 12x − 1.',-13,'−13','Use the completed square 3(x − 2)² − 13. The squared part is never negative.','The smallest value of 3(x − 2)² is 0 (when x = 2), so the minimum value of y is −13.');
+V(3,`${CS} Q16c`,'Find the equation of the line of symmetry of the curve y = 3x² − 12x − 1. Give the value of x.',2,'x = 2','The line of symmetry passes through the turning point.','The turning point is at x = 2, so the line of symmetry is x = 2.',{h:'Type it like x = 3.'});
+sqf(2,`${CS} Q17`,'Write x² + 5x + 9 in the form (x + a)² + b.','(x + 5/2)² + 11/4','Half of 5 is 5/2. (x + 5/2)² = x² + 5x + 25/4, so b = 9 − 25/4 = 11/4.',['(x+2.5)^2+2.75','(x+5/2)^2+2.75','(x+2.5)^2+11/4'],'Type it like (x + 5/2)^2 + 11/4 (decimals are fine).');
+W(3,`${CS} Q18`,'x² + px + 4 = (x + q)² − 5. Find p and q (give the positive values).','6,3','Expand the right-hand side and compare coefficients.','(x + q)² − 5 = x² + 2qx + q² − 5. So q² − 5 = 4 → q² = 9 → q = 3 (or −3), and p = 2q = 6 (or −6).',{d:'p = 6, q = 3 (or p = −6, q = −3)',alt:['-6,-3'],h:PAIR});
+V(3,`${CS} Q19`,'x² + 4x + p = (x + 2)² + 3p. Find the value of p.',-2,'p = −2','Expand the right-hand side and compare the constant terms.','(x + 2)² + 3p = x² + 4x + 4 + 3p. So p = 4 + 3p → −2p = 4 → p = −2.',{h:'Type the value, for example -3.'});
+W(2,`${CS} Q20a`,'f(x) = x² − 4x − 5. The minimum point of y = f(x) is M. Find the coordinates of M.','(2,-9)','Complete the square.','x² − 4x − 5 = (x − 2)² − 9, so M = (2, −9).',{d:'(2, −9)',h:'Type the coordinates like (2, -5).'});
+qs(2,`${CS} Q20b`,'f(x) = x² − 4x − 5 = 0 to find the x-coordinates of P and Q, where the curve crosses the x-axis.',[1,-4,-5],[-1,5],'x = −1 or x = 5','x² − 4x − 5 = (x − 5)(x + 1) = 0, so P = (−1, 0) and Q = (5, 0).',{m:'The curve crosses the x-axis where f(x) = 0. Factorise.'});
+V(1,`${CS} Q20c`,'f(x) = x² − 4x − 5. The curve crosses the y-axis at R. Find the y-coordinate of R.',-5,'−5','The curve crosses the y-axis where x = 0.','f(0) = −5, so R = (0, −5).');
+
+/* ===================== QUADRATICS: PROBABILITY (scanned exam questions) ===================== */
+const PB='Probability scan';
+const PM='Write the probability using the counters (multiply the two probabilities; without replacement the second has one fewer counter). Set it equal to the given value, then clear fractions and solve the quadratic (or linear) equation. Reject answers that are impossible.';
+V(3,`${PB} Q1`,`There are some red counters and some blue counters in a bag. The ratio of red to blue is 3 : 1. Two counters are removed at random. The probability that both are blue is ${F(1,20)}. How many counters were in the bag before any were removed?`,16,'16',PM,'Red 3x, blue x, total 4x. P(B,B) = x/(4x) × (x − 1)/(4x − 1) = (x − 1)/(4(4x − 1)) = 1/20 → 20(x − 1) = 4(4x − 1) → 20x − 20 = 16x − 4 → x = 4. Total = 4x = 16.');
+V(3,`${PB} Q2`,`There are some red counters and some blue counters in a bag. The ratio of red to blue is 4 : 1. Two counters are removed at random. The probability that both are red is ${F(22,35)}. How many blue counters are in the bag?`,3,'3',PM,'Red 4x, blue x, total 5x. P(R,R) = 4x/(5x) × (4x − 1)/(5x − 1) = 22/35 → 140(4x − 1) = 110(5x − 1) → 560x − 140 = 550x − 110 → x = 3 blue counters.');
+V(3,`${PB} Q3`,`There are 5 red counters and y blue counters in a bag. Imogen takes a counter at random, puts it back, then takes another. The probability that both counters are red is ${F(1,9)}. How many blue counters are in the bag?`,10,'10',PM,'With replacement: (5/(5 + y))² = 1/9 → 5/(5 + y) = 1/3 → 5 + y = 15 → y = 10.');
+V(3,`${PB} Q4`,`There are 4 red counters and x blue counters in a bag. 2 counters are removed at random. The probability that both are blue is ${F(1,3)}. Work out the value of x.`,6,'6',PM,'x/(x + 4) × (x − 1)/(x + 3) = 1/3 → 3x² − 3x = x² + 7x + 12 → 2x² − 10x − 12 = 0 → x² − 5x − 6 = 0 → (x − 6)(x + 1) = 0 → x = 6 (x cannot be negative).');
+V(3,`${PB} Q5`,`There are 5 red counters and x blue counters in a bag. 2 counters are removed at random. The probability that both are red is ${F(5,33)}. Work out the value of x.`,7,'7',PM,'5/(5 + x) × 4/(4 + x) = 5/33 → 660 = 5(x² + 9x + 20) → x² + 9x − 112 = 0 → (x + 16)(x − 7) = 0 → x = 7.');
+V(3,`${PB} Q6`,`There are n counters in a bag; 4 are red and the rest are blue. Ross takes a counter at random and does not replace it, then takes another. The probability that he takes two blue counters is ${F(1,3)}. This gives n² − 13n + 30 = 0. Find the value of n.`,10,'10',PM,'(n − 4)/n × (n − 5)/(n − 1) = 1/3 → 3(n² − 9n + 20) = n² − n → n² − 13n + 30 = 0 → (n − 10)(n − 3) = 0. n = 3 is impossible (there are 4 red counters), so n = 10.');
+V(3,`${PB} Q7`,`There are n counters in a bag; 8 are red and the rest are blue. Adam takes a counter at random and does not replace it, then takes another. The probability that he takes two blue counters is ${F(1,5)}. This gives n² − 21n + 90 = 0. Find the value of n.`,15,'15',PM,'(n − 8)/n × (n − 9)/(n − 1) = 1/5 → 5(n² − 17n + 72) = n² − n → n² − 21n + 90 = 0 → (n − 15)(n − 6) = 0. n = 6 is impossible (there are 8 red counters), so n = 15.');
+
 })();
