@@ -28,6 +28,14 @@ Tests use the **worksheet questions** by default (167 questions with answers and
 
 Every topic has four levels (Easy, Moderate, Difficult, Very Difficult). Each level has 10 repeatable test sets of 10 questions, plus a Mixed option. Each question has an **Explain** hint and a full **Correction** with working.
 
+## Accounts, Puppies and admin
+
+- **Students** sign in with their name and a 4–8 digit PIN. First time: they choose a PIN and type it again to create the account. Results and Puppies are saved online (Supabase project `smithy-maths-practice`, London) and appear on every device. A result taken offline is kept in the browser and uploaded at the next sign-in.
+- **Wrong PINs:** 5 wrong PINs lock that name for 5 minutes.
+- **Admin page:** `/admin.html` (https://smithymathspractice.sklss.co.uk/admin.html). Shows every student, their tests and each question/answer. Add a student (with a temporary PIN they must change), set a temporary PIN, delete a student, and **redeem Puppies** for rewards (the student sees their balance on their dashboard).
+- **Admin password:** set once with the one-time setup code; 5 wrong passwords lock the admin for 15 minutes.
+- **Security:** PINs and the admin password are stored only as bcrypt hashes. The tables cannot be read with the public key; the page can only call the `portal_sync`, `portal_admin`, `portal_admin_setup` and `portal_admin_user` database functions.
+
 ## Answer input
 
 - Surds: `3√5` (or `3sqrt5`); use the on-screen √ button.
