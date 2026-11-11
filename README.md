@@ -2,7 +2,7 @@
 
 A GCSE Higher maths practice portal that runs on GitHub Pages. Students type or choose answers, earn Puppies 🐶 and track their progress on a dashboard (saved in the browser).
 
-**Live site:** https://stalinnetcode.github.io/Smithy_Maths_Practice-/
+**Live site:** https://smithymathspractice.sklss.co.uk/
 
 ## Topics
 
@@ -47,3 +47,10 @@ Every topic has four levels (Easy, Moderate, Difficult, Very Difficult). Each le
 ## Turning on GitHub Pages
 
 Settings > Pages > Source: Deploy from a branch > Branch: `main`, folder `/ (root)` > Save.
+
+## Custom domain
+
+The `CNAME` file points GitHub Pages at **smithymathspractice.sklss.co.uk**.
+
+- DNS: a `CNAME` record for `smithymathspractice` (in the `sklss.co.uk` zone) pointing to `stalinnetcode.github.io`.
+- GitHub: Settings > Pages > Custom domain = `smithymathspractice.sklss.co.uk`, then tick **Enforce HTTPS** once the certificate is issued.
