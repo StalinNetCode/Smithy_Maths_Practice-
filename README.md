@@ -36,6 +36,18 @@ Every topic has four levels (Easy, Moderate, Difficult, Very Difficult). Each le
 - **Admin password:** set once with the one-time setup code; 5 wrong passwords lock the admin for 15 minutes.
 - **Security:** PINs and the admin password are stored only as bcrypt hashes. The tables cannot be read with the public key; the page can only call the `portal_sync`, `portal_admin`, `portal_admin_setup` and `portal_admin_user` database functions.
 
+## Answering, whiteboard and AI
+
+- **One attempt per question:** students type (or pick) an answer and press **Submit answer**. It is marked once: correct answers earn Puppies (1 / 2 / 4 / 5 by level); wrong answers earn none and the correction with full working appears straight away.
+- **Explain** shows the method hint at any time. **✨ Explain with AI** appears once the question is answered: Claude writes a step-by-step explanation, including what probably went wrong with the student's answer.
+- **Whiteboard:** a drawing pad on the right of each question for working out (pens, eraser, undo, clear). It can be hidden, and stacks under the question on phones. Drawings are not saved.
+
+### AI backend (Claude)
+
+`supabase/functions/explain-ai` runs as a Supabase Edge Function. The browser never sees the AI key: the function checks the student's name and PIN with the database (`portal_ai_check`), allows **40 explanations per student per 24 hours**, then calls Claude. The student's name is never sent to the AI.
+
+Secrets (Supabase dashboard → Edge Functions → Secrets): `ANTHROPIC_API_KEY` (required), `AI_MODEL` (optional, default `claude-haiku-5-5`), `AI_DAILY_LIMIT` (optional, default 40). Opening https://ouagqetmnjlzhiyhhgan.supabase.co/functions/v1/explain-ai in a browser shows whether the key is set.
+
 ## Answer input
 
 - Surds: `3√5` (or `3sqrt5`); use the on-screen √ button.
