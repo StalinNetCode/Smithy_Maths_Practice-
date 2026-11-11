@@ -13,6 +13,19 @@ A GCSE Higher maths practice portal that runs on GitHub Pages. Students type or 
 | Sequences | linear nth term, term checks, Fibonacci-type, geometric, quadratic nth term, surd sequences |
 | Algebraic Fractions | simplifying, adding and subtracting, cancelling factorised quadratics, solving equations with fractions |
 
+## Question bank
+
+Tests use the **worksheet questions** by default (167 questions with answers and full working), taken from the PDFs in `worksheets/`:
+
+| Worksheet | Portal topic | Easy / Moderate / Difficult / Very Difficult |
+|---|---|---|
+| Indices - 1 + Surds - 1 | Indices and Surds | 11 / 31 / 30 / 32 |
+| Sequences - 1 | Sequences | 11 / 14 / 4 / 4 |
+| Algebraic Fractions - 2 | Algebraic Fractions | 4 / 8 / 11 / 7 |
+| (none yet) | Quadratics | generated questions only |
+
+"Show that" questions are turned into "find a and b" (or "simplify") questions so they can be marked automatically. Students can switch to **Generated practice** (new numbers every time) or **Both**.
+
 Every topic has four levels (Easy, Moderate, Difficult, Very Difficult). Each level has 10 repeatable test sets of 10 questions, plus a Mixed option. Each question has an **Explain** hint and a full **Correction** with working.
 
 ## Answer input
@@ -25,7 +38,11 @@ Every topic has four levels (Easy, Moderate, Difficult, Very Difficult). Each le
 ## Files
 
 - `index.html` is the portal (screens, marking, dashboard).
-- `questions.js` is the question bank. Each template generates fresh numbers; add templates to a level's list to add questions.
+- `worksheets.js` is the worksheet question bank (one line per question, with the worksheet reference).
+- `questions.js` is the generated question bank.
+- `worksheets/` holds the source PDFs.
+- To add a worksheet question, copy a `W(...)` or `V(...)` line in `worksheets.js`.
+- `questions.js` (generated): Each template generates fresh numbers; add templates to a level's list to add questions.
 
 ## Turning on GitHub Pages
 
